@@ -1,0 +1,95 @@
+mobile_subs: schema
+    + tables
+        applications: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                slug: varchar(255) NN
+                name: varchar(255) NN
+                callback_url: varchar(255) NN
+                created_at: timestamp
+                updated_at: timestamp
+            + keys
+                #1: PK (id)
+        devices: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                u_id: varchar(255) NN
+                app_id: varchar(255) NN
+                language: varchar(255) NN
+                operating_system: varchar(255) NN
+                created_at: timestamp
+                updated_at: timestamp
+                application_id: bigint unsigned
+            + indices
+                devices_u_id_index: index (u_id) type btree
+                devices_app_id_index: index (app_id) type btree
+                devices_application_id_index: index (application_id) type btree
+            + keys
+                #1: PK (id)
+        failed_jobs: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                uuid: varchar(255) NN
+                connection: text NN
+                queue: text NN
+                payload: longtext NN
+                exception: longtext NN
+                failed_at: timestamp NN default CURRENT_TIMESTAMP
+            + indices
+                failed_jobs_uuid_unique: unique (uuid) type btree
+            + keys
+                #1: PK (id)
+                failed_jobs_uuid_unique: AK (uuid)
+        jobs: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                queue: varchar(255) NN
+                payload: longtext NN
+                attempts: tinyint unsigned NN
+                reserved_at: int unsigned
+                available_at: int unsigned NN
+                created_at: int unsigned NN
+            + indices
+                jobs_queue_index: index (queue) type btree
+            + keys
+                #1: PK (id)
+        migrations: table collate utf8mb4_unicode_ci
+            + columns
+                id: int unsigned NN identity null
+                migration: varchar(255) NN
+                batch: int NN
+            + keys
+                #1: PK (id)
+        password_resets: table collate utf8mb4_unicode_ci
+            + columns
+                email: varchar(255) NN
+                token: varchar(255) NN
+                created_at: timestamp
+            + indices
+                password_resets_email_index: index (email) type btree
+        subscriptions: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                device_id: bigint unsigned NN
+                status: varchar(1) NN
+                receipt: varchar(255) NN
+                expire_date: timestamp NN
+                created_at: timestamp
+                updated_at: timestamp
+            + keys
+                #1: PK (id)
+        users: table collate utf8mb4_unicode_ci
+            + columns
+                id: bigint unsigned NN identity null
+                name: varchar(255) NN
+                email: varchar(255) NN
+                email_verified_at: timestamp
+                password: varchar(255) NN
+                remember_token: varchar(100)
+                created_at: timestamp
+                updated_at: timestamp
+            + indices
+                users_email_unique: unique (email) type btree
+            + keys
+                #1: PK (id)
+                users_email_unique: AK (email)

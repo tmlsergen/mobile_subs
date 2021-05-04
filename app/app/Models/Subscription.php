@@ -34,9 +34,9 @@ class Subscription extends Model
 
         self::updated(function ($model){
             if ($model->status == 'p'){
-                App\Events\SubscriptionCanceled::dispatch();
+                event(new App\Events\SubscriptionCanceled($model));
             }else {
-                App\Events\SubscriptionReNewed::dispatch();
+                event(new App\Events\SubscriptionReNewed($model));
             }
 
             $esService = App::make(App\Services\SubscriptionSearchService::class);
