@@ -2,7 +2,7 @@
 
 ## Installation
 1. Clone Project
-> ``
+> `git clone https://github.com/tmlsergen/mobile_subs.git`
 2. Copy .env file
 > `cp app/.env.example app/.env`
 3. Starting Docker Containers
