@@ -1,0 +1,102 @@
+version: '3'
+
+services:
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    env_file: ./app/.env
+    working_dir: /var/www
+    volumes:
+      - ./app/:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - mobile-sub-network
+
+  # for mock
+  node:
+    build:
+      context: ./mock
+      dockerfile: Dockerfile
+    volumes:
+      - ./mock:/home/node/app
+    ports:
+      - "3000:3000"
+    networks:
+      - mobile-sub-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./app/:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - mobile-sub-network
+
+  #MySQL Service
+  db:
+    image: mysql:latest
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mobile_subs
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysqldb
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - mobile-sub-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - mobile-sub-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.0
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - mobile-sub-network
+
+#Docker Networks
+networks:
+  mobile-sub-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  dbdata:
+    driver: local
+  elasticsearch-data:
+    driver: local
