@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "00c987f0-cf17-4ba5-88ff-77ce9cabf807",
+		"name": "mobile-subs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"u_id\": \"jasjah123112312323\",\n    \"app_id\": \"fac123123123ebook\",\n    \"language\": \"en\",\n    \"operating_system\" : \"ios\"\n}"
+						},
+						"url": {
+							"raw": "http://mobile-subs.test/api/v1/auth/device/register",
+							"protocol": "http",
+							"host": [
+								"mobile-subs",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"device",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ElasticSearch",
+			"item": [
+				{
+					"name": "Get Devices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:9200/devices/_search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9200",
+							"path": [
+								"devices",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:9200/subscriptions/_search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9200",
+							"path": [
+								"subscriptions",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE INDEX",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:9200/devices",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "9200",
+							"path": [
+								"devices"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subscription",
+			"item": [
+				{
+					"name": "Subscription Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9tb2JpbGUtc3Vicy50ZXN0XC9hcGlcL3YxXC9hdXRoXC9kZXZpY2VcL3JlZ2lzdGVyIiwiaWF0IjoxNjIwMDAyNjI2LCJleHAiOjE2MjEyOTg2MjYsIm5iZiI6MTYyMDAwMjYyNiwianRpIjoiT0ZUMGpnWTd5NHRYR2JXRCIsInN1YiI6Imphc2phaDEyMzExMjMxMjMyM2ZhYzEyMzEyMzEyM2Vib29rIiwicHJ2IjoiNTcyOTA3YjhkYWNmNzUyZWM5NTQxOWM5NzJlY2E4NzFiNjQ2YzYyOSJ9.OV22kT729WAXt-Pn2XNUZMz5jcaViBicp1EPmEgWikQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receipt\": \"receipt1283y712318111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://mobile-subs.test/api/v1/subscriptions/purchase",
+							"protocol": "http",
+							"host": [
+								"mobile-subs",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subscriptions",
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Subscription",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9tb2JpbGUtc3Vicy50ZXN0XC9hcGlcL3YxXC9hdXRoXC9kZXZpY2VcL3JlZ2lzdGVyIiwiaWF0IjoxNjIwMDAyNjI2LCJleHAiOjE2MjEyOTg2MjYsIm5iZiI6MTYyMDAwMjYyNiwianRpIjoiT0ZUMGpnWTd5NHRYR2JXRCIsInN1YiI6Imphc2phaDEyMzExMjMxMjMyM2ZhYzEyMzEyMzEyM2Vib29rIiwicHJ2IjoiNTcyOTA3YjhkYWNmNzUyZWM5NTQxOWM5NzJlY2E4NzFiNjQ2YzYyOSJ9.OV22kT729WAXt-Pn2XNUZMz5jcaViBicp1EPmEgWikQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://mobile-subs.test/api/v1/subscriptions/check",
+							"protocol": "http",
+							"host": [
+								"mobile-subs",
+								"test"
+							],
+							"path": [
+								"api",
+								"v1",
+								"subscriptions",
+								"check"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mock",
+			"item": [
+				{
+					"name": "http://localhost:3000/google/purchase-google",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receipt\":\"sergen213125\",\n    \"client\": \"asd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/google/purchase-google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"google",
+								"purchase-google"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
